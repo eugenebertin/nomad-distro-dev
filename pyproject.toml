@@ -81,13 +81,12 @@ cwd = "packages/nomad-FAIR"
 [tool.poe.tasks.gui]
 cmd = '"C:/Program Files (x86)/Yarn/bin/yarn.cmd" run'
 cwd = "packages/nomad-FAIR/gui"
-env = { NODE_EXE = "C:/Users/eugbe/node-v20.19.4-win-x86/node-v20.19.4-win-x86/node.exe" }
-
+env = { NODE_EXE = "C:/Users/eugbe/nodejs/node-v20.19.4-win-x86/node.exe" }
 
 [tool.poe.tasks.gui-setup]
 cmd = '"C:/Program Files (x86)/Yarn/bin/yarn.cmd"'
 cwd = "packages/nomad-FAIR/gui"
-env = { NODE_EXE = "C:/Users/eugbe/node-v20.19.4-win-x86/node-v20.19.4-win-x86/node.exe" }
+env = { NODE_EXE = "C:/Users/eugbe/nodejs/node-v20.19.4-win-x86/node.exe" }
 
 [tool.poe.tasks.gen-gui-test-env]
 cmd = "python -W ignore -m nomad.cli dev gui-config"
