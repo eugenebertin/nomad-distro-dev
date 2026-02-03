@@ -1,5 +1,11 @@
 {
     "python.analysis.extraPaths": [
         "./packages/nomad-FAIR"
-    ]
+    ],
+    "git.autorefresh": true,
+    "git.enableStatusBarSync": true,
+    "git.autoRepositoryDetection": true,
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 1000,
+    "git.postCommitCommand": "sync"
 }
