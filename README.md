@@ -181,11 +181,18 @@ Now, everytime you want to start the docs server, run the following:
    uv run poe docs
    ```
 
-5. [Optional] Run the remote tools hub server (only if you wish to use the remote tools hub):
+5. [Optional] Run the remote tools hub container (only if you wish to use NORTH):
+   1. [Once] Generate `.env.north`. This gitignored environment file contains OAuth/session secrets for the hub container, derived from your `nomad.yaml`.
 
-   ```bash
-   uv run poe hub
-   ```
+      ```bash
+      uv run poe north setup
+      ```
+
+   1. Start the hub container (it won't start via the plain `uv run poe docker`/`poe setup` commands, as it is opt-in):
+
+      ```bash
+      uv run poe north start
+      ```
 
 6. Running tests
 
