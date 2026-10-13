@@ -82,8 +82,8 @@ args = [{ name = "action", positional = true, required = true }]
 shell = '''
 import os, re, secrets, subprocess, sys
 
-command = ["$action"]
-if command == ["setup"]:
+action = os.environ.get("action")
+if action == "setup":
     import yaml
 
     if os.path.exists(".env.north"):
@@ -118,12 +118,12 @@ if command == ["setup"]:
         )
     print("Created .env.north")
 
-elif command == ["start"]:
+elif action == "start":
     subprocess.run(["docker", "compose", "up", "north"], check=True)
 
 else:
     sys.exit("Usage: uv run poe north setup|start")
-    '''
+'''
 interpreter = "python"
 
 [tool.poe.tasks.gui-env]
