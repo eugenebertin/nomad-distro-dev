@@ -7,7 +7,7 @@ with open("/srv/jupyterhub/jupyterhub_config.py") as config_file:
 class LocalNORTHSpawner(NORTHSpawner):
     @functools.cached_property
     def profile_list(self):
-        response = requests.get(f"{self.nomad_api_url}/north/tools/")
+        response = requests.get(f"{self.nomad_api_url}/north/")
         response.raise_for_status()
         tools = response.json()
 
@@ -27,7 +27,8 @@ class LocalNORTHSpawner(NORTHSpawner):
             for tool in tools
         ]
 
-    def apply_user_options(self, user_options):
+    @staticmethod
+    def apply_user_options(spawner, user_options):
         tool = user_options.get("tool")
         environment = user_options.get("environment")
         user_home = user_options.get("user_home")
@@ -47,11 +48,11 @@ class LocalNORTHSpawner(NORTHSpawner):
                 "NOMAD launch options must include upload and external mount lists"
             )
 
-        self.image = tool["image"]
-        self.cmd = tool.get("cmd")
-        self.default_url = tool.get("default_url", "/lab")
-        self.privileged = tool.get("privileged", False)
-        self.environment = environment
+        spawner.image = tool["image"]
+        spawner.cmd = tool.get("cmd")
+        spawner.default_url = tool.get("default_url", "/lab")
+        spawner.privileged = tool.get("privileged", False)
+        spawner.environment = environment
 
         mounts = [
             {
@@ -78,9 +79,9 @@ class LocalNORTHSpawner(NORTHSpawner):
             }
             for mount in external_mounts
         )
-        self.mounts = mounts
+        spawner.mounts = mounts
 
-        host_config = dict(self.extra_host_config or {})
+        host_config = dict(spawner.extra_host_config or {})
         security_opts = list(host_config.get("security_opt", []))
         if tool.get("seccomp_unconfined"):
             security_opts.append("seccomp:unconfined")
@@ -93,7 +94,7 @@ class LocalNORTHSpawner(NORTHSpawner):
                 DeviceRequest(count=-1, capabilities=[["gpu"]])
             )
             host_config["device_requests"] = device_requests
-        self.extra_host_config = host_config
+        spawner.extra_host_config = host_config
 
 
 c.JupyterHub.spawner_class = LocalNORTHSpawner
