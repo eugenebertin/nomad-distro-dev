@@ -190,6 +190,8 @@ Now, everytime you want to start the docs server, run the following:
 
       If `.env.north` was generated before, remove it before running setup again; setup preserves existing files. The generated `KEYCLOAK_URL` must retain the `/auth` path from `keycloak.server_url`.
 
+      The local NORTH configuration also adapts the tools response shape used by this NOMAD version; OAuth remains enabled.
+
    1. Start the hub container (it won't start via the plain `uv run poe docker`/`poe setup` commands, as it is opt-in):
 
       ```bash
