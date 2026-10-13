@@ -181,11 +181,22 @@ Now, everytime you want to start the docs server, run the following:
    uv run poe docs
    ```
 
-5. [Optional] Run the remote tools hub server (only if you wish to use the remote tools hub):
+5. [Optional] Run the remote tools hub container (only if you wish to use NORTH):
+   1. [Once] Generate `.env.north`. This gitignored environment file contains OAuth/session secrets for the hub container, derived from your `nomad.yaml`.
 
-   ```bash
-   uv run poe hub
-   ```
+      ```bash
+      uv run poe north setup
+      ```
+
+      If `.env.north` was generated before, remove it before running setup again; setup preserves existing files. The generated `KEYCLOAK_URL` must retain the `/auth` path from `keycloak.server_url`.
+
+      The local NORTH configuration adapts the tools response shape and applies NOMAD's Docker launch options (image, environment, and mounts); OAuth remains enabled.
+
+   1. Start the hub container (it won't start via the plain `uv run poe docker`/`poe setup` commands, as it is opt-in):
+
+      ```bash
+      uv run poe north start
+      ```
 
 6. Running tests
 
