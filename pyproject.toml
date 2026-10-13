@@ -80,7 +80,7 @@ interpreter = "python"
 [tool.poe.tasks.north]
 args = [{ name = "action", positional = true, required = true }]
 shell = '''
-import os, re, secrets, subprocess, sys
+import os, secrets, subprocess, sys
 
 action = os.environ.get("action")
 if action == "setup":
@@ -101,7 +101,7 @@ if action == "setup":
         "server_url",
         "https://nomad-lab.eu/fairdi/keycloak/auth",
     )
-    keycloak_url = re.sub(r"/auth/?$", "", server_url)
+    keycloak_url = server_url.rstrip("/")
 
     hub_port = north.get("hub_port", 9000)
     base_path = services.get("api_base_path", "/nomad-oasis")

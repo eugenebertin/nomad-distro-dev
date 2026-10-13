@@ -188,6 +188,8 @@ Now, everytime you want to start the docs server, run the following:
       uv run poe north setup
       ```
 
+      If `.env.north` was generated before, remove it before running setup again; setup preserves existing files. The generated `KEYCLOAK_URL` must retain the `/auth` path from `keycloak.server_url`.
+
    1. Start the hub container (it won't start via the plain `uv run poe docker`/`poe setup` commands, as it is opt-in):
 
       ```bash

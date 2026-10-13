@@ -93,8 +93,6 @@ services:
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:rw"
       - "nomad_north:/data"
-      - "./jupyterhub_config_local.py:/srv/jupyterhub/jupyterhub_config_local.py:ro"
-    command: ["jupyterhub", "-f", "/srv/jupyterhub/jupyterhub_config.py", "-f", "/srv/jupyterhub/jupyterhub_config_local.py"]
     ports:
       - 9000:9000
     healthcheck:
